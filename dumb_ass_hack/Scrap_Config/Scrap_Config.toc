@@ -1,0 +1,8 @@
+## Interface: 90207
+## Title: Scrap Config
+## Author: Tuller and Jaliborc (João Cardoso)
+## Notes: An options menu for Scrap
+## Dependencies: Scrap
+## LoadOnDemand: 1
+
+..\Scrap\addons\config\config.xml

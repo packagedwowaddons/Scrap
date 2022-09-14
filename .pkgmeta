@@ -1,0 +1,5 @@
+package-as: Scrap
+
+move-folders:
+    Scrap/dumb_ass_hack/Scrap_Config: Scrap_Config
+    Scrap/dumb_ass_hack/Scrap_Merchant: Scrap_Merchant

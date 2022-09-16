@@ -3,17 +3,26 @@ name: tag
 on:
   push:
     paths:
-      - Scrap.toc
+      - '**.toc'
     branches:
       - master
+      - main
+
+  workflow_dispatch:
 
 jobs:
   tag:
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/checkout@master
-      - uses: jaliborc/action-general-autotag@master
-        with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          source_file: "Scrap.toc"
-          extraction_regex: "\\s*##\\s*Version\\s*:\\s*([\\d\\.]+)"
+      - uses: actions/checkout@v2
+      - run: |
+          maintoc=$(find . -name '*.toc' -maxdepth 1 | head -n1)
+          version=$(sed -n -re 's/\s*##\s*Version\s*:\s*(\S+)/\1/p' "$maintoc")
+
+          if git rev-parse "$version" &>/dev/null; then
+            echo 'tag already exists'
+            exit 0
+          fi
+
+          git tag "$version"
+          git push --tags
